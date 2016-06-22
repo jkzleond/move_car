@@ -149,6 +149,7 @@ angular.module('move_car.controllers', [])
    */
   $scope.pay = function(way){
     var ticket_id = $scope.ticket_selected && $scope.ticket_selected.id;
+    $scope.ticket_selected = null; //清空选择的票券
     payMent.pay(way, $scope.order.id, ticket_id, function(resp){
       if(resp.success)
       {
