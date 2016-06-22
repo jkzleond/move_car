@@ -180,7 +180,7 @@ angular.module('move_car.controllers', [])
               }
             ]
           }).then(function(res){
-            if(res.action = 'Y')
+            if(res.action == 'Y')
             {
               $scope.$emit('user:info_refresh');
               $state.go('order-car_owners', {order_id: $scope.order.id}, {location: 'replace'});
