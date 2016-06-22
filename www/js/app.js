@@ -105,7 +105,7 @@ angular.module('move_car', ['ionic', 'move_car.controllers', 'move_car.services'
   $ionicConfigProvider.views.transition('android');
 
   //scrolling
-  //$ionicConfigProvider.scrolling.jsScrolling(true);
+  $ionicConfigProvider.scrolling.jsScrolling(false);
   
   //自定义url参数类型
   $urlMatcherFactoryProvider.type('json', {
