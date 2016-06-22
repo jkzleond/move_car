@@ -22,6 +22,7 @@ angular.module('move_car.services', [])
       {
         var wxpay_url = resourceConfig.base_url + 'orders/' + order_id +'/pay/wxpay.json';
         Common.request('post', wxpay_url, {ticket_id: ticket_id}, true).success(function(resp){
+          alert(resp);
           if(resp.success)
           {
             var result = {source: 'wx'};
@@ -35,6 +36,7 @@ angular.module('move_car.services', [])
 
             var wx_pay_param = resp.data;
             WeixinJSBridge.invoke('getBrandWCPayRequest', wx_pay_param,  function(res){
+              alert(res);
               if(res.err_msg == 'get_brand_wcpay_request:ok')
               {
                 result.success = true;
