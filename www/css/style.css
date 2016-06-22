@@ -1,5 +1,12 @@
 /* Empty. Add your own CSS if you like */
 
+.item.mini {
+    padding: 10px;
+}
+.item-icon-right.mini {
+    padding-right: 48px;
+}
+
 .ticket {
     background: url('../img/t_bg.png');
     background-size: 100% 100%;

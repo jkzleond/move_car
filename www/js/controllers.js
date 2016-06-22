@@ -1,6 +1,6 @@
 angular.module('move_car.controllers', [])
 
-.controller('MoveCarCtrl', function($scope, $state, $ionicLoading, $ionicModal, popup, MoveCar, Ticket) {
+.controller('MoveCarCtrl', function($scope, $state, $ionicLoading, popup, MoveCar, Ticket) {
 
   $scope.form_data = {
     province: '云',
@@ -12,9 +12,6 @@ angular.module('move_car.controllers', [])
     $scope.form_data.phone = $scope.user && $scope.user.info && $scope.user.info.phone || null;
   });
 
-  $scope.$on('destroye', function(){
-    $scope.ticket_selector_modal.remove();
-  });
 
   function validate(form){
 
@@ -38,6 +35,49 @@ angular.module('move_car.controllers', [])
     return true;
   };
   
+
+
+  /**
+   * 提交订单
+   */
+  $scope.submit = function(form){
+    if(!validate(form)) return;
+    var hphm = $scope.form_data.province + $scope.form_data.hphm;
+    var phone = $scope.form_data.phone;
+    
+    MoveCar.add_order(hphm, phone)
+      .success(function(resp){
+        if(resp.success)
+        {
+          $scope.$emit('user:info_refresh');
+          $state.go('order-pay', {order_id: resp.order_id});
+        }
+      });
+  };
+})
+
+.controller('OrderPayCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicModal, $ionicLoading, browser, payMent, MoveCar, Ticket){
+
+  $scope.is_cm = browser.is_cm();
+
+  //支付数据(支付方式等)
+  $scope.pay_data = {way: 'wxpay'};
+
+  /*
+    订单支付controller 
+   */
+  MoveCar.get_order_by_id($stateParams.order_id)
+    .success(function(resp){
+        if(resp.success)
+        {
+          $scope.order = resp.data;
+          if(Number($scope.order.total_fee) == 0)
+          {
+            $scope.order.is_free = true;
+          }
+        }
+    });
+
   /**
    * 开始选择红包
    */
@@ -104,55 +144,20 @@ angular.module('move_car.controllers', [])
   }
 
   /**
-   * 提交订单
-   */
-  $scope.submit = function(form){
-    if(!validate(form)) return;
-    var hphm = $scope.form_data.province + $scope.form_data.hphm;
-    var phone = $scope.form_data.phone;
-    var ticket_id = $scope.ticket_selected && $scope.ticket_selected.id;
-    $scope.ticket_selected = null;
-    
-    MoveCar.add_order(hphm, phone, ticket_id)
-      .success(function(resp){
-        if(resp.success)
-        {
-          $scope.$emit('user:info_refresh');
-          $state.go('order-pay', {order_id: resp.order_id});
-        }
-      });
-  };
-})
-
-.controller('OrderPayCtrl', function($scope, $state, $stateParams, $ionicPopup, payMent, MoveCar){
-
-  //支付数据(支付方式等)
-  $scope.pay_data = {way: 'wxpay'};
-
-  /*
-    订单支付controller 
-   */
-  MoveCar.get_order_by_id($stateParams.order_id)
-    .success(function(resp){
-        if(resp.success)
-        {
-          $scope.order = resp.data;
-          if(Number($scope.order.total_fee) == 0)
-          {
-            $scope.order.is_free = true;
-          }
-        }
-    });
-
-  /**
    * 订单支付(调用支付接口)
    * @param {String} way 支付方式
    */
   $scope.pay = function(way){
-    payMent.pay(way, $scope.order.id, function(resp){
+    var ticket_id = $scope.ticket_selected && $scope.ticket_selected.id;
+    payMent.pay(way, $scope.order.id, ticket_id, function(resp){
       if(resp.success)
       {
-        if(resp.source == 'wx')
+        if(resp.code == 'order_free')
+        {
+          $scope.$emit('user:info_refresh');
+          $state.go('order-car_owners', {order_id: $scope.order.id}, {location: 'replace'});
+        }
+        else if(resp.source == 'wx')
         {
           $scope.$emit('user:info_refresh');
           $state.go('order-car_owners', {order_id: $scope.order.id}, {location: 'replace'});
@@ -197,7 +202,12 @@ angular.module('move_car.controllers', [])
   $scope.free = function(){
     //免费即直接跳转订单相关车主列表
     $state.go('order-car_owners', {order_id: $scope.order.id}, {location: 'replace'});
-  }
+  };
+
+  $scope.$on('$destroy', function(){
+    $scope.ticket_selector_modal.remove();
+  });
+
 })
 
 .controller('OrdersCtrl', function($scope, $state, MoveCar) {

@@ -17,16 +17,24 @@ angular.module('move_car.services', [])
   var pay = null;
   if(browser.is_wx())
   {
-    pay = function(way, order_id, call_back){
+    pay = function(way, order_id, ticket_id, call_back){
       if(way == 'wxpay')
       {
-        var unified_order_url = resourceConfig.base_url + 'wx_pay/' + order_id +'/unified_order.json';
-        Common.request('get', unified_order_url, true).success(function(resp){
+        var wxpay_url = resourceConfig.base_url + 'orders/' + order_id +'/pay/wxpay.json';
+        Common.request('post', wxpay_url, {ticket_id: ticket_id}, true).success(function(resp){
           if(resp.success)
           {
+            var result = {source: 'wx'};
+            if(resp.code == 'order_free')
+            {
+              result.success = true;
+              result.code = 'order_free';
+              call_back(result);
+              return;
+            }
+
             var wx_pay_param = resp.data;
             WeixinJSBridge.invoke('getBrandWCPayRequest', wx_pay_param,  function(res){
-              var result = {source: 'wx'};
               if(res.err_msg == 'get_brand_wcpay_request:ok')
               {
                 result.success = true;
@@ -44,12 +52,18 @@ angular.module('move_car.services', [])
   }
   else if(browser.is_cm())
   {
-    pay = function(way, order_id, call_back){
-      var cm_pay_url = resourceConfig.base_url + 'cm_pay/' + order_id + '/protocol.json';
-      Common.request('get', cm_pay_url, true).success(function(resp){
+    pay = function(way, order_id, ticket_id, call_back){
+      var cm_pay_url = resourceConfig.base_url + 'orders/' + order_id +'/pay/cm.json';
+      Common.request('post', cm_pay_url, {ticket_id: ticket_id}, true).success(function(resp){
         if(resp.success)
         {
           var result = {source: 'cm', success: true};
+          if(resp.code == 'order_free')
+          {
+            result.code = 'order_free';
+            call_back(result);
+            return;
+          }
           var cm_pay_protocol = resp.data;
           //$window.open(cm_pay_protocol);
           $window.location.href=cm_pay_protocol;
@@ -60,14 +74,20 @@ angular.module('move_car.services', [])
   }
   else
   {
-    pay = function(way, order_id, call_back){
-      var cm_pay_url = resourceConfig.base_url + 'cm_pay/' + order_id + '/protocol.json';
-      Common.request('get', cm_pay_url, true).success(function(resp){
+    pay = function(way, order_id, ticket_id, call_back){
+      var cm_pay_url = resourceConfig.base_url + 'orders/' + order_id +'/pay/cm.json';
+      Common.request('post', cm_pay_url, {ticket_id: ticket_id}, true).success(function(resp){
         if(resp.success)
         {
           var result = {source: 'cm', success: true};
+          if(resp.code == 'order_free')
+          {
+            result.code = 'order_free';
+            call_back(result);
+            return;
+          }
           var cm_pay_protocol = resp.data;
-          console.log(cm_pay_protocol);
+          //$window.open(cm_pay_protocol);
           $window.location.href=cm_pay_protocol;
           call_back(result);
         }

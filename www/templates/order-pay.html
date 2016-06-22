@@ -18,29 +18,35 @@
                     <b style="font-size: 20px;color:#387ef5">付款后即可联系到TA</b>
                 </div>
             </div>
+            <div class="item item-icon-right mini" ng-click="start_select_ticket()">
+              使用票券
+              <span class="item-note" ng-if="!ticket_selected">选择票券</span>
+              <span class="item-note" ng-if="ticket_selected">{{ticket_selected.value}}元({{ticket_selected.type_text}})</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
             <div class="item item-divider">
                 资费明细
             </div>
-            <div class="item">
+            <div class="item mini">
                 服务费
                 <span class="item-note">{{order.record.price|currency:'￥':2}}</span>
             </div>
-            <div class="item" ng-if="order.ticket">
-                使用{{order.ticket.type_text}}({{order.ticket.title}})
-                <span class="item-note">{{order.ticket.type == 4 ? '=' : '-'}}{{order.ticket.value|currency:'￥':2}}</span>
+            <div class="item mini" ng-if="ticket_selected">
+                使用{{ticket_selected.type_text}}({{ticket_selected.title}})
+                <span class="item-note">{{ticket_selected.type == 4 ? '=' : '-'}}{{ticket_selected.value|currency:'￥':2}}</span>
             </div>
-            <div class="item">
+            <div class="item mini">
                 总计
                 <span class="item-note">{{order.record.price|currency:'￥':2}}</span>
             </div>
-            <div class="item">
+            <div class="item mini">
                 实付
-                <span class="item-note money"><b>{{order.total_fee|currency:'￥':2}}</b></span>
+                <span class="item-note money"><b>{{( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) )|currency:'￥':2}}</b></span>
             </div>
             <div class="item item-divider">
                 资费说明
             </div>
-            <div class="item">
+            <div class="item mini">
                 <pre>
                     服务费包含:
                         (1)为您找到车主
@@ -49,7 +55,7 @@
                 </pre>
             </div>
         </div>
-        <div class="list" ng-if="!order.is_free">
+        <div class="list" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value )) != 0 || !is_cm">
             <div class="item item-divider">
                 支付方式
             </div>
@@ -58,11 +64,11 @@
         </div>
     </ion-content>
     <ion-footer-bar>
-        <h4>应付:<span class="money"><b>{{order.total_fee|currency:'￥':2}}</b></span></h4>
-        <button class="button button-positive pull-right" ng-click="pay(pay_data.way)" ng-if="!order.is_free">
+        <h4>应付:<span class="money"><b>{{( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) |currency:'￥':2}}</b></span></h4>
+        <button class="button button-positive pull-right" ng-click="pay(pay_data.way)" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) != 0">
             支付
         </button>
-        <button class="button button-positive pull-right" ng-click="free()" ng-if="order.is_free">
+        <button class="button button-positive pull-right" ng-click="pay(pay_data.way)" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) == 0">
             免费使用
         </button>
     </ion-footer-bar>
