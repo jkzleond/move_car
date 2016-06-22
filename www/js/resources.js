@@ -4,7 +4,7 @@
 angular.module('move_car.resources', ['ngResource'])
 
 .constant('resourceConfig', {
-    base_url: 'http://116.55.248.76:8091/mc_api/',
+    base_url: 'http://116.55.248.76:8090/mc_api/',
     msg_duration: 5000
 })
 
