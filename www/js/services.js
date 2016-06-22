@@ -22,7 +22,7 @@ angular.module('move_car.services', [])
       {
         var wxpay_url = resourceConfig.base_url + 'orders/' + order_id +'/pay/wxpay.json';
         Common.request('post', wxpay_url, {ticket_id: ticket_id}, true).success(function(resp){
-          alert(resp);
+          alert(angular.toJson(resp));
           if(resp.success)
           {
             var result = {source: 'wx'};
