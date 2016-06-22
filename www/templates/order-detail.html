@@ -1,0 +1,41 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="挪车记录-{{order.record.hphm}}">
+  <ion-content class="padding" ng-class="{'has-footer': order.is_expired != 1 || order.is_feedbacked != 1}">
+    <p><b>车牌号:</b><span class="item-note">{{order.record.hphm}}</span></p>
+    <p><b>订单时间:</b><span class="item-note">{{order.create_date}}</span></p>
+    <p><b>订单状态:</b><span class="item-note" ng-if="order.is_expired == 1">已过期</span><span class="item-note" ng-if="order.is_expired != 1">{{ order.expire_date | time_after:'hh小时mm分钟后过期' }}</span></p>
+    <p><b>支付金额:</b><span class="item-note money"><b>{{order.total_fee | currency:'￥':2}}</b></span></p>
+    <p><b>您的手机号:</b><span class="item-note">{{order.record.uphone}}</span></p>
+    <div class="list">
+      <div class="item milestone success">
+        <div class="line"></div>
+        <div class="node"></div>
+        提交订单
+        <span class="item-note">{{order.create_date}}</span>
+      </div>
+      <div class="item milestone" ng-repeat="track in tracks" ng-class="{success: track.result == 'success', failed: track.result == 'failed'}">
+        <div class="line"></div>
+        <div class="node"></div>
+        {{track.title}}
+        <span class="item-note">{{track.create_date}}</span>
+      </div>
+      <div class="item milestone" ng-class="{success: order.is_expired == 1}">
+        <div class="line"></div>
+        <div class="node"></div>
+        订单过期
+        <span class="item-note">{{order.expire_date}}</span>
+      </div>
+    </div>
+  </ion-content>
+  <div class="bar bar-footer" ng-if="order.is_expired != 1 || order.is_feedbacked != 1">
+    <div class="button-bar">
+      <button class="button button-small button-balanced" ng-if="order.is_expired != 1" ui-sref="order-car_owners({order_id: order.id})" ui-sref-opts="{reload: true}">再次通知</button>
+      <button class="button button-small button-energized" ng-if="order.is_feedbacked != 1" ui-sref="feedback({order_id: order.id})">反馈</button>
+    </div>
+  </div>
+</ion-view>

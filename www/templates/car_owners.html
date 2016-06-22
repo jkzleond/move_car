@@ -1,0 +1,14 @@
+<ion-view view-title="通知车主">
+    <ion-content>
+        <div class="list" ng-if="car_owners.length > 1">
+            <div class="item">
+                <h2>{{order.record.hphm}}</h2>的车主存在多个联系电话,您可逐一尝试
+            </div>
+            <div class="item item-icon-left item-icon-right" collection-repeat="car_owner in car_owners" ng-click="notify(order.id, car_owner.id, car_owner.source)">
+                <i class="icon ion-android-phone-portrait"></i>
+                车主电话{{$index + 1}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

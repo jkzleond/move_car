@@ -1,0 +1,22 @@
+<ion-view view-title="申诉">
+    <ion-content>
+        <div class="list">
+            <div class="item item-divider">
+                您遇到的问题
+            </div>
+            <ion-radio ng-repeat="problem in problems" ng-model="data.problem_selected" ng-value="problem">{{problem.text}}</ion-radio>
+            <div class="item item-input-inset" ng-if="data.problem_selected.value == 3">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="这里填写您遇到的问题" ng-model="data.problem_selected.addition">
+                </label>
+            </div>
+            <div class="item item-divider">其他建议或意见</div>
+            <div class="item">
+                <textarea ng-model="data.advise" placeholder="您的意见,建议或投诉" class="text-input" style="width:100%" rows="10"></textarea>
+            </div>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer bar-positive" ng-click="appeal(order_id)">
+        <div class="title">提交申诉</div>
+    </div>
+</ion-view>

@@ -1,0 +1,22 @@
+<ion-view title="可用卡券">
+    <ion-content class="has-footer">
+        <ion-refresher on-refresh="refresh_available_tickets()" pulling-text="下拉刷新"></ion-refresher>
+        <div class="list" ng-repeat="ticket in tickets">
+            <div class="item ticket">
+                <h2>{{ticket.type_text}}</h2>
+                <h3>{{ticket.title}}</h3>
+                <p>{{ticket.des}}</p>
+                <p>到期时间:{{ticket.end_date}}</p>
+                <div class="ticket-fee">
+                    <span>{{ticket.value | currency:'￥':1}}</span>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="!no_more_tickets" on-infinite="load_more_available_tickets()" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+    <div class="bar bar-footer bar-stable" ui-sref="tickets-expired()">
+        <div class="title">
+            查看过期卡券>>>
+        </div>
+    </div>
+</ion-view>

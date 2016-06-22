@@ -1,0 +1,109 @@
+/* Empty. Add your own CSS if you like */
+
+.ticket {
+    background: url('../img/t_bg.png');
+    background-size: 100% 100%;
+    border: none;
+    padding-right: 106px;
+    min-height: 100px;
+}
+
+.ticket.expired {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(100%);
+}
+
+.ticket > .ticket-fee {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    max-width: 80px;
+    max-height: 80px;
+    width: 100%;
+    height: 100%;
+    line-height: 80px;
+    color: yellow;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.ticket > .ticket-fee:first-letter {
+    font-size: 0.5em;
+}
+
+@media(min-width: 360px){
+    .ticket > .ticket-fee {
+        max-width: 90px;
+        font-size: 2.2em;
+    }
+}
+
+@media(min-width: 410px){
+    .ticket > .ticket-fee {
+        max-width: 100px;
+        font-size: 2.5em;
+    }
+}
+
+@media(min-width: 768px){
+    .ticket > .ticket-fee {
+        right: 50px;
+        max-width: 120px;
+        font-size: 3em;
+    }
+}
+
+.item.milestone {
+    border: none;
+    padding-left: 32px;
+}
+
+.item.milestone:first-child {
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+}
+
+.item.milestone:last-child {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.milestone > .line {
+    position: absolute;
+    top: 0px;
+    left: 8px;
+    width: 4px;
+    height: 100%;
+    background-color: #eee;
+}
+
+.milestone > .node {
+    position: absolute;
+    top: 10px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: #eee;
+}
+
+.milestone.success > .line {
+    background-color: #11c1f3;
+}
+
+.milestone.failed > .line {
+    background-color: #ef473a;
+}
+
+.milestone.success > .node {
+    background-color: #11c1f3;
+}
+
+.milestone.failed > .node {
+    background-color: #ef473a;
+}
+
+.money {
+    color: orangered;
+}

@@ -1,0 +1,20 @@
+<ion-modal-view>
+    <ion-content>
+        <div class="list" ng-repeat="ticket in tickets" ng-click="select_ticket(ticket)">
+            <div class="item ticket">
+                <h2>{{ticket.type_text}}</h2>
+                <h3>{{ticket.title}}</h3>
+                <p>{{ticket.des}}</p>
+                <p>到期时间:{{ticket.end_date}}</p>
+                <div class="ticket-fee">
+                    <span>{{ticket.value | currency:'￥':1}}</span>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer">
+        <div class="button-bar">
+            <button class="button button-assertive" ng-click="end_select_ticket()">不使用红包</button>
+        </div>
+    </div>
+</ion-modal-view>

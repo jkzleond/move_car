@@ -1,0 +1,16 @@
+<ion-view title="过期卡券">
+    <ion-content>
+        <div class="list" ng-repeat="ticket in tickets" ng-click="select_ticket(ticket)">
+            <div class="item ticket expired">
+                <h2>{{ticket.type_text}}</h2>
+                <h3>{{ticket.title}}</h3>
+                <p>{{ticket.des}}</p>
+                <p>到期时间:{{ticket.end_date}}</p>
+                <div class="ticket-fee">
+                    <span>{{ticket.value | currency:'￥':1}}</span>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="!no_more_tickets" on-infinite="load_more_expire_tickets()" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+</ion-view>

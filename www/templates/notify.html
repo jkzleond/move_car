@@ -1,0 +1,39 @@
+<ion-view view-title="通知车主">
+    <ion-content>
+        <div class="list">
+            <div class="item">
+                <span>对方车牌</span>
+                <span class="item-note">{{data.hphm}}</span>
+            </div>
+            <div class="item item-icon-left item-icon-right">
+                <i class="icon ion-android-textsms"></i>
+                <span>挪车短信已送达车主手机</span>
+                <i class="icon ion-android-checkmark-circle icon-accessory" style="color:blue"></i>
+            </div>
+            <div class="item item item-icon-left">
+                <i class="icon ion-ios-telephone"></i>
+                <span ng-if="count_down">电话正在拨打中...</span>
+                <span ng-if="count_down == 0">电话拨打结束</span>
+            </div>
+            <div class="item">
+                <p style="text-align: center" ng-show="count_down">
+                    语音连接中<br>
+                    请耐心等待...<br>
+                    <b style="font-size: 20px;">{{count_down}}S</b>
+                </p>
+                <p style="white-space: normal">
+                    由于车小惠使用的是虚拟通话技术,来电显示号码有可能被标记为诈骗电话,<b style="color:red">请勿据接!</b>
+                </p>
+            </div>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer" ng-show="count_down === 0">
+        <button class="button button-large button-positive" style="width:20%" ng-click="call_result(true)">
+            是
+        </button>
+        <div class="title">是否联系到车主?</div>
+        <button class="button button-large button-assertive" style="width:20%" ng-click="call_result(false)">
+            否
+        </button>
+    </div>
+</ion-view>

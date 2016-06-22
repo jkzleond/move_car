@@ -1,0 +1,36 @@
+<ion-view view-title="挪车反馈">
+    <ion-content>
+        <div class="list">
+            <div class="item item-divider">
+                您遇到了什么问题?(多选)
+            </div>
+            <ion-checkbox ng-model="form_data.q1_1">车主不接电话</ion-checkbox>
+            <ion-checkbox ng-model="form_data.q1_2">联系人不是车主,但认识车主</ion-checkbox>
+            <ion-checkbox ng-model="form_data.q1_3">联系人不认识车主</ion-checkbox>
+            <ion-checkbox ng-model="form_data.q1_4">联系电话是空号</ion-checkbox>
+            <ion-checkbox ng-model="form_data.q1_5">车主不来挪车</ion-checkbox>
+            <ion-checkbox ng-model="form_data.q1_6">遇到些问题但车主还是来挪车了</ion-checkbox>
+            <ion-checkbox ng-model="form_data.q1_7.is_checked">其他</ion-checkbox>
+            <div class="item item-input-inset" ng-if="form_data.q1_7.is_checked">
+                <label class="item-input-wrapper">
+                  <input type="text" placeholder="这里填写您遇到的问题" ng-model="form_data.q1_7.value">
+                </label>
+            </div>
+            <div class="item item-divider" style="white-space: normal">
+                此项服务收费10元,您还会继续使用该服务吗?
+            </div>
+            <ion-radio ng-model="form_data.q2" ng-value="1">愿意</ion-radio>
+            <ion-radio ng-model="form_data.q2" ng-value="2">再便宜点可以接受</ion-radio>
+            <ion-radio ng-model="form_data.q2" ng-value="3">收费就不用了</ion-radio>
+            <ion-item>
+                <ion-label stacked>意见,建议或投诉</ion-label>
+                <textarea ng-model="form_data.advise" placeholder="您的意见,建议或投诉" class="text-input" style="width:100%" rows="10"></textarea>
+            </ion-item>   
+        </div>
+    </ion-content>
+    <div class="bar bar-footer">
+        <div class="button-bar">
+            <button class="button button-positive" on-tap="feedback()">提交</button>
+        </div>
+    </div>
+</ion-view>
