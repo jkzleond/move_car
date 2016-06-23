@@ -58,7 +58,7 @@ angular.module('move_car.controllers', [])
 
 .controller('OrderPayCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicModal, $ionicLoading, browser, payMent, MoveCar, Ticket){
 
-  $scope.is_cm = browser.is_cm() ? '1' : '0';
+  $scope.is_cm = browser.is_cm();
 
   //支付数据(支付方式等)
   $scope.pay_data = {way: 'wxpay'};
