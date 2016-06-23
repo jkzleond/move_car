@@ -57,7 +57,7 @@
         </div>
         <div class="list" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value )) != 0 || !is_cm">
             <div class="item item-divider">
-                支付方式
+                支付方式{{is_cm}}
             </div>
             <!-- <ion-radio ng-model="pay_data.way" value="alipay" name="pay_way"><div>支付宝</div></ion-radio> -->
             <ion-radio ng-model="pay_data.way" value="wxpay" name="pay_way"><div>微信支付</div></ion-radio>
