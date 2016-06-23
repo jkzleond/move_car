@@ -4,6 +4,7 @@
 angular.module('move_car.resources', ['ngResource'])
 
 .constant('resourceConfig', {
+    //base_url: 'http://localhost:8091/mc_api/',
     base_url: 'http://116.55.248.76:8090/mc_api/',
     msg_duration: 5000
 })
@@ -14,16 +15,26 @@ angular.module('move_car.resources', ['ngResource'])
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     //发送cookie
     $httpProvider.defaults.withCredentials = true;
-    //自动添加ssid参数到url
-    // $httpProvider.interceptors.push(function($q, $rootScope){
-    //     return {
-    //         request: function(config){
-    //             config.params = config.params || {};
-    //             config.params.ssid = $rootScope.user && $rootScope.user.ssid;
-    //             return config;
-    //         }
-    //     }
-    // });
+    //自动添加Auth-Token header
+    $httpProvider.interceptors.push(function($q, $rootScope, $injector){
+        return {
+            request: function(config){
+                config.headers = config.headers || {};
+                config.headers['Auth-Token'] = $rootScope.user && $rootScope.user.guid;
+                return config;
+            },
+            response: function(response){
+              var res = response.data;
+              if(!res.success && res.code == 1001)
+              {
+                //截获token错误
+                $rootScope.$emit('user:info_refresh');
+                $injector.get('$state').go('tab.move_car');
+              }
+              return response;
+            }
+        }
+    });
 })
 
 /**

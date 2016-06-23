@@ -72,6 +72,7 @@ angular.module('move_car', ['ionic', 'move_car.controllers', 'move_car.services'
         var data = resp.data;
         var user = {};
         user.ssid = data.session_id;
+        user.guid = data.guid;
         user.info = data.user_info;
         $rootScope.user = user; //保存当前用户信息到rootScope,全局可用
         unbind_state_change();
@@ -89,6 +90,7 @@ angular.module('move_car', ['ionic', 'move_car.controllers', 'move_car.services'
       {
         var data = resp.data;
         $rootScope.user.ssid = data.session_id;
+        $rootScope.user.guid = data.guid;
         $rootScope.user.info = data.user_info;
       }
     });
