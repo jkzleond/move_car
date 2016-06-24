@@ -1,5 +1,13 @@
 <ion-modal-view>
-    <ion-content class="has-footer">
+    <div class="bar bar-header bar-stable">
+        <div class="button-bar">
+            <button class="button button-clear" ng-click="end_select_ticket()">
+                <i class="icon ion-ios-close-outline"></i>
+                不使用票券
+            </button>
+        </div>
+    </div>
+    <ion-content class="has-header">
         <div class="list" ng-repeat="ticket in tickets" ng-click="select_ticket(ticket)">
             <div class="item ticket">
                 <h2>{{ticket.type_text}}</h2>
@@ -12,9 +20,4 @@
             </div>
         </div>
     </ion-content>
-    <div class="bar bar-footer">
-        <div class="button-bar">
-            <button class="button button-assertive" ng-click="end_select_ticket()">不使用票券</button>
-        </div>
-    </div>
 </ion-modal-view>

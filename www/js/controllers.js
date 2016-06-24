@@ -206,7 +206,8 @@ angular.module('move_car.controllers', [])
   };
 
   $scope.$on('$destroy', function(){
-    $scope.ticket_selector_modal.remove();
+    //创建过票券选择modal则移除
+    $scope.ticket_selector_model && $scope.ticket_selector_modal.remove();
   });
 
 })
@@ -297,7 +298,7 @@ angular.module('move_car.controllers', [])
     });
 })
 
-.controller('CarOwnersCtrl', function($scope, $state, $stateParams, MoveCar){
+.controller('CarOwnersCtrl', function($scope, $state, $stateParams, $timeout, MoveCar){
   /*
     车主列表
    */
@@ -319,6 +320,21 @@ angular.module('move_car.controllers', [])
       {
         //只有一个车主电话则直接跳转通知界面
         $scope.notify(order_id, $scope.car_owners[0].id, $scope.car_owners[0].source);
+      }
+    }
+    else
+    {
+      if(resp.code == 'no_pay')
+      {
+        $timeout(function(){
+          $state.go('order-pay', {order_id: order_id}, {location: 'replace'});
+        }, 2000);
+      }
+      else
+      {
+        $timeout(function(){
+          $state.go('order-detail', {order_id: order_id}, {location: 'replace'});
+        }, 2000);
       }
     }
   });
@@ -354,7 +370,7 @@ angular.module('move_car.controllers', [])
     }
     else
     {
-      if(resp.code = 'no_pay')
+      if(resp.code == 'no_pay')
       {
         $timeout(function(){
           $state.go('order-pay', {order_id: order_id}, {location: 'replace'});
@@ -372,10 +388,12 @@ angular.module('move_car.controllers', [])
   $scope.call_result = function(is_ok){
     if(is_ok)
     {
+      MoveCar.mark_car_owner(car_owner_id, car_owner_source, true);
       $state.go('call_success', {location: 'replace'});
     }
     else
     {
+      MoveCar.mark_car_owner(car_owner_id, car_owner_source, false);
       $state.go('call_failed', {
         order_id: order_id,
         car_owner_id: car_owner_id,

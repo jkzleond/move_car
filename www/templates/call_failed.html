@@ -18,7 +18,7 @@
                 尝试其他号码
             </div>
             <ion-radio ng-repeat="car_owner in car_owners" ng-model="car_owner_selected" value="car_owner">
-                <span>车主电话{{$index}}</span>
+                <span>车主电话{{$index + 1}}</span>
             </ion-radio>
         </div>
     </ion-content>

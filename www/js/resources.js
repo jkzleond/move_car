@@ -4,8 +4,8 @@
 angular.module('move_car.resources', ['ngResource'])
 
 .constant('resourceConfig', {
-    //base_url: 'http://localhost:8091/mc_api/',
-    base_url: 'http://116.55.248.76:8090/mc_api/',
+    base_url: 'http://localhost:8091/mc_api/',
+    //base_url: 'http://116.55.248.76:8090/mc_api/',
     msg_duration: 5000
 })
 
@@ -369,6 +369,18 @@ angular.module('move_car.resources', ['ngResource'])
     MoveCar.feedback = function(order_id, data){
       var url = resourceConfig.base_url + 'orders/' + order_id + '/feedback.json';
       return Common.request('post', url, data, true);
+    }
+
+    /**
+     * 标记车主
+     * @param  {Integer} car_owner_id
+     * @param  {String} car_owner_source
+     * @param  {Boolean} success
+     * @return {Promise}
+     */
+    MoveCar.mark_car_owner = function(car_owner_id, car_owner_source, success){
+      var url = resourceConfig.base_url + 'car_owner/' + car_owner_source + '/' + car_owner_id + '/mark.json';
+      return Common.request('put', url, {success: success}, false); 
     }
 
     return MoveCar;
