@@ -12,8 +12,126 @@
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
+    <!-- Weixin Config -->
+    <scirpt src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></scirpt>
+    <script type="text/javascript">
+        (function(window){
+          /**获取配置*/
+          window.callback_config = function callback_config(config){
+            console.log(config);
+            wx.config({
+                debug: false,
+                appId: config.appId,
+                timestamp: config.timestamp,
+                nonceStr: config.nonceStr,
+                signature: config.signature,
+
+               
+                jsApiList: [
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+                  // 所有要调用的 API 都要加到这个列表中
+                ]
+            });
+
+            var wxData = {
+            "appId": "",
+            "imgUrl" : 'http://ip.yn122.net/cyh/move_car/www/img/car_mate_logo.png',
+            "link" : 'http://ip.yn122.net:8090/mc_api',
+            "desc" : '车友惠挪车',
+            "title" : "车友惠挪车"
+            };
+            var str_mp = "weixin://profile/gh_8592a4c9c934";//关注的链接
+            wx.ready(function () {
+            // 2. 分享接口
+            // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+                wx.onMenuShareAppMessage({
+                  title: wxData.title,
+                  desc: wxData.desc,
+                  link:wxData.link ,
+                  imgUrl: wxData.imgUrl,
+                  trigger: function (res) {
+                    
+                  },
+                  success: function (res) {
+                  location.href = str_mp;//关注的链接
+                  },
+                  cancel: function (res) {
+                   //alert("如此嗨的福利，真的不分享给朋友吗？");
+                  },
+                  fail: function (res) {
+                     alert(JSON.stringify(res));
+                  }
+                });
+
+                wx.onMenuShareTimeline({
+                  title: wxData.title,
+                  desc: wxData.desc,
+                  link: wxData.link,
+                  imgUrl: wxData.imgUrl,
+                  trigger: function (res) {
+                  },
+                  success: function (res) {
+                  location.href = str_mp;//关注的链接
+                  },
+                  cancel: function (res) { 
+                    //alert("如此嗨的福利，真的不分享给朋友吗？");
+                  },
+                  fail: function (res) {
+                    alert(JSON.stringify(res));
+                  }
+                });
+                
+                //alert('wx_config ok!');
+            });
+
+            wx.error(function (res) {
+              alert(res.errMsg);
+            });
+          }
+          
+          var script = document.createElement('script');
+          script.src =  "http://116.55.248.76/wxjs_config/config.php?callback=callback_config&url=" + encodeURIComponent( window.location.href.split('#')[0] );
+          var body = document.getElementsByTagName('body')[0];
+          body.appendChild(script);
+          
+        })(window);
+    </script>
+    
     <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
     <script src="lib/ionic/js/angular/angular-resource.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
