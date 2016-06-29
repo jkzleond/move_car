@@ -18,6 +18,7 @@
         (function(window){
           /**获取配置*/
           window.callback_config = function callback_config(config){
+            alert(JSON.stringify(config));
             console.log(config);
             wx.config({
                 debug: false,
@@ -120,13 +121,12 @@
             wx.error(function (res) {
               alert(res.errMsg);
             });
-          }
+          };
           
           var script = document.createElement('script');
           script.src =  "http://116.55.248.76/wxjs_config/config.php?callback=callback_config&url=" + encodeURIComponent( window.location.href.split('#')[0] );
           var body = document.getElementsByTagName('body')[0];
           body.appendChild(script);
-          
         })(window);
     </script>
     
