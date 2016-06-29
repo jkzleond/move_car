@@ -13,12 +13,11 @@
     -->
 
     <!-- Weixin Config -->
-    <scirpt src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></scirpt>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript">
         (function(window){
           /**获取配置*/
           window.callback_config = function callback_config(config){
-            alert(JSON.stringify(wx));
             console.log(config);
             wx.config({
                 debug: false,
