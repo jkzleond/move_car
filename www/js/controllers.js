@@ -349,7 +349,7 @@ angular.module('move_car.controllers', [])
   }
 })
 
-.controller('NotifyCtrl', function($scope, $state, $stateParams, $timeout, $interval, $ionicLoading, MoveCar){
+.controller('NotifyCtrl', function($scope, $state, $stateParams, $timeout, $interval, $ionicPopup, $ionicLoading, MoveCar){
   /*
     通知车主controller
    */
@@ -366,7 +366,13 @@ angular.module('move_car.controllers', [])
       $scope.count_down = 60; 
       $interval(function(){
         $scope.count_down--;
-      }, 1000, 60);
+      }, 1000, 60).then(function(res){
+        $scope.call_result_popup = $ionicPopup.show({
+          title: '是否联系到车主?',
+          scope: $scope,
+          templateUrl: 'templates/call_result-popup.html'
+        });
+      });
     }
     else
     {
@@ -385,7 +391,7 @@ angular.module('move_car.controllers', [])
     }
   });
 
-  $scope.call_result = function(is_ok){
+  $scope.call_result = function(is_ok, status){
     if(is_ok)
     {
       MoveCar.mark_car_owner(car_owner_id, car_owner_source, true);
@@ -393,7 +399,7 @@ angular.module('move_car.controllers', [])
     }
     else
     {
-      MoveCar.mark_car_owner(car_owner_id, car_owner_source, false);
+      MoveCar.mark_car_owner(car_owner_id, car_owner_source, false, status);
       $state.go('call_failed', {
         order_id: order_id,
         car_owner_id: car_owner_id,
@@ -429,7 +435,7 @@ angular.module('move_car.controllers', [])
   });
 })
 
-.controller('AppealCtrl', function($scope, $state, $stateParams, $ionicPopup, MoveCar){
+.controller('AppealCtrl', function($scope, $state, $stateParams, $ionicPopup, $timeout, MoveCar){
   /*
     申诉controller
    */
@@ -506,7 +512,6 @@ angular.module('move_car.controllers', [])
    * @return {Promise}
    */
   $scope.appeal = function(order_id){
-    console.log($scope.data);
     if(!_validate_form()) return;
     MoveCar.appeal(order_id, {
       problem: $scope.data.problem_selected.value,
@@ -524,11 +529,17 @@ angular.module('move_car.controllers', [])
               text: '知道了',
               type: 'button-positive',
               onTap: function(e){
-                $state.go('tab.move_car');
+                $state.go('order-detail', {order_id: order_id}, {location: 'replace'});
               }
             }
           ]
         });
+      }
+      else
+      {
+        $timeout(function(){
+          $state.go('order-detail', {order_id: order_id}, {location: 'replace'});
+        }, 2000);
       }
     });
   } 

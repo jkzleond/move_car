@@ -376,11 +376,12 @@ angular.module('move_car.resources', ['ngResource'])
      * @param  {Integer} car_owner_id
      * @param  {String} car_owner_source
      * @param  {Boolean} success
+     * @param  {Integer} status  success为false时有效, 1:未拨通电话, 2:不是车主
      * @return {Promise}
      */
-    MoveCar.mark_car_owner = function(car_owner_id, car_owner_source, success){
+    MoveCar.mark_car_owner = function(car_owner_id, car_owner_source, success, status){
       var url = resourceConfig.base_url + 'car_owner/' + car_owner_source + '/' + car_owner_id + '/mark.json';
-      return Common.request('put', url, {success: success}, false); 
+      return Common.request('put', url, {success: success, status: status}, false); 
     }
 
     return MoveCar;
