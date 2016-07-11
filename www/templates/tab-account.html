@@ -5,16 +5,16 @@
             <i class="icon ion-android-phone-portrait"></i>
             我的电话
             <span class="item-note">{{user.info.phone}}</span>
-            <button class="button button-small button-calm" ng-click="start_modify_phone()">修改</button>
+            <button class="button button-small button-calm" ng-click="start_modify_phone()" mc-oplog="{action_name:'modify_phone', action_title:'修改手机号'}">修改</button>
         </a>
-        <a href="#/car_list" class="item item-icon-left item-icon-right">
+        <a href="#/car_list" class="item item-icon-left item-icon-right" mc-oplog="{action_name:'check_my_cars', action_title:'查看我的车'}">
             <i class="icon ion-model-s"></i>
             我的车
             <span class="item-note" ng-if="user.info.car_count == 0">您还没有添加车辆</span>
             <span class="badge badge-assertive" ng-if="user.info.car_count != 0">{{user.info.car_count}}</span>
             <i class="icon ion-chevron-right icon-accessory"></i>
         </a>
-        <a href="#/tickets/available" class="item item-icon-left item-icon-right">
+        <a href="#/tickets/available" class="item item-icon-left item-icon-right" mc-oplog="{action_name:'check_available_tickets', action_title:'查看可用卡券'}">
             <i class="icon ion-ios-filing"></i>
             我的卡券
             <span class="item-note" ng-if="user.info.ticket_count == 0">您没有卡券</span>

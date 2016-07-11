@@ -369,7 +369,7 @@ angular.module('move_car.resources', ['ngResource'])
     MoveCar.feedback = function(order_id, data){
       var url = resourceConfig.base_url + 'orders/' + order_id + '/feedback.json';
       return Common.request('post', url, data, true);
-    }
+    };
 
     /**
      * 标记车主
@@ -382,7 +382,18 @@ angular.module('move_car.resources', ['ngResource'])
     MoveCar.mark_car_owner = function(car_owner_id, car_owner_source, success, status){
       var url = resourceConfig.base_url + 'car_owner/' + car_owner_source + '/' + car_owner_id + '/mark.json';
       return Common.request('put', url, {success: success, status: status}, false); 
-    }
+    };
+
+    /**
+     * 记录操作日志
+     * @param  {String} action_name
+     * @param  {String} action_title
+     * @return {Promise}
+     */
+    MoveCar.save_oplog = function(action_name, action_title){
+        var url = resourceConfig.base_url + 'oplog.json';
+        return Common.request('post', url, {action_name: action_name, action_title: action_title}, false)
+    };
 
     return MoveCar;
 })

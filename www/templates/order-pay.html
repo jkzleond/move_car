@@ -18,7 +18,7 @@
                     <b style="font-size: 20px;color:#387ef5">付款后即可联系到TA</b>
                 </div>
             </div>
-            <div class="item item-icon-right mini" ng-click="start_select_ticket()">
+            <div class="item item-icon-right mini" ng-click="start_select_ticket()" mc-oplog="{action_name: 'select_ticket', action_title: '选择票券'}">
               使用票券
               <span class="item-note" ng-if="!ticket_selected">选择票券</span>
               <span class="item-note" ng-if="ticket_selected">{{ticket_selected.value}}元({{ticket_selected.type_text}})</span>
@@ -65,10 +65,10 @@
     </ion-content>
     <ion-footer-bar>
         <h4>应付:<span class="money"><b>{{( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) |currency:'￥':2}}</b></span></h4>
-        <button class="button button-positive pull-right" ng-click="pay(pay_data.way)" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) != 0">
+        <button class="button button-positive pull-right" ng-click="pay(pay_data.way)" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) != 0" mc-oplog="{action_name: 'order_pay', action_title: '订单支付'}">
             支付
         </button>
-        <button class="button button-positive pull-right" ng-click="pay(pay_data.way)" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) == 0">
+        <button class="button button-positive pull-right" ng-click="pay(pay_data.way)" ng-if="( ticket_selected.type == 4 ? ticket_selected.value : ( order.record.price - ticket_selected.value ) ) == 0" mc-oplog="{action_name: 'order_free', action_title: '免费使用'}">
             免费使用
         </button>
     </ion-footer-bar>

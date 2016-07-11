@@ -3,7 +3,7 @@
     <ion-refresher on-refresh="load_latest_orders()" pulling-text="下拉刷新"></ion-refresher>
     <ion-list>
       <div class="item item-remove-animate" ng-repeat="order in orders" item="order" type="item-text-wrap">
-        <div ui-sref="order-detail({order_id: order.id, order: order})">
+        <div ui-sref="order-detail({order_id: order.id, order: order})" mc-oplog="{action_name: 'order_detail', action_title: '订单详情'}">
           <p><b>车牌号:</b><span class="item-note">{{order.record.hphm}}</span></p>
           <p><b>订单时间:</b><span class="item-note">{{order.create_date}}</span></p>
           <p><b>订单状态:</b><span class="item-note" ng-if="order.is_expired == 1">已过期</span><span class="item-note" ng-if="order.is_expired != 1">{{ order.expire_date | time_after:'hh小时mm分钟后过期' }}</span></p>
@@ -13,7 +13,7 @@
           <div class="col-offset-33"></div>
           <div class="col col-33">
             <div class="button-bar">
-              <button class="button button-small button-balanced" ng-if="order.is_expired != 1" ui-sref="order-car_owners({order_id: order.id})" ui-sref-opts="{reload: true}">再次通知</button>
+              <button class="button button-small button-balanced" ng-if="order.is_expired != 1" ui-sref="order-car_owners({order_id: order.id})" ui-sref-opts="{reload: true}" mc-oplog="{action_name:'notify_again', action_title:'再次通知'}">再次通知</button>
             </div>
           </div>
           <div class="col col-33">

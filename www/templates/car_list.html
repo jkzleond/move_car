@@ -4,17 +4,17 @@
         <ion-list>
             <ion-item ng-repeat="car in car_list">
                 车牌号:{{car.hphm}}
-                <ion-option-button class="button-calm" ng-click="modify_car(car)">
+                <ion-option-button class="button-calm" ng-click="modify_car(car)" mc-oplog="{action_name:'modify_car', action_title:'编辑车辆'}">
                     编辑
                 </ion-option-button>
-                <ion-option-button class="button-assertive" ng-click="del_car($index, car)">
+                <ion-option-button class="button-assertive" ng-click="del_car($index, car)" mc-oplog="{action_name:'delete_car', action_title:'删除车辆'}" >
                     删除
                 </ion-option-button>
             </ion-item>
         </ion-list>
         <ion-infinite-scroll on-infinite="load_more_cars()" distance="1%" ng-if="!no_more_cars"></ion-infinite-scroll>
     </ion-content>
-    <div class="bar bar-footer" ng-click="start_add_car()">
+    <div class="bar bar-footer" ng-click="start_add_car()" mc-oplog="{action_name:'add_car', action_title:'添加车辆'}">
         <div class="title">
             <i class="icon ion-plus-circled"></i>
             添加车辆

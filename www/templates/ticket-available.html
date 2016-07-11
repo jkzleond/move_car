@@ -14,7 +14,7 @@
         </div>
         <ion-infinite-scroll ng-if="!no_more_tickets" on-infinite="load_more_available_tickets()" distance="1%"></ion-infinite-scroll>
     </ion-content>
-    <div class="bar bar-footer bar-stable" ui-sref="tickets-expired()">
+    <div class="bar bar-footer bar-stable" ui-sref="tickets-expired()" mc-oplog="{action_name:'check_expired_tickets', action_title:'查看过期卡券'}">
         <div class="title">
             查看过期卡券>>>
         </div>

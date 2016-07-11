@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('move_car', ['ionic', 'move_car.controllers', 'move_car.services', 'move_car.filters', 'move_car.resources'])
+angular.module('move_car', ['ionic', 'move_car.directives', 'move_car.controllers', 'move_car.services', 'move_car.filters', 'move_car.resources'])
 
-.run(function($rootScope, $ionicPlatform, $location, $state, $timeout, browser, User) {
+.run(function($rootScope, $ionicPlatform, $location, $state, $timeout, browser, User, MoveCar) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -95,6 +95,18 @@ angular.module('move_car', ['ionic', 'move_car.controllers', 'move_car.services'
       }
     });
   });
+
+  //全局捕获事件的方法,用于记录操作日志
+
+  $rootScope.$on('$ionicView.afterEnter', function(evt, view_data){
+    var action_name = view_data.stateName;
+    var action_title = view_data.title;
+    MoveCar.save_oplog(action_name, action_title);
+  });
+
+  $rootScope.$on('$mc_oplog', function(evt, op_data){
+    MoveCar.save_oplog(op_data.action_name, op_data.action_title);
+  });
 })
 
 .config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
@@ -107,7 +119,7 @@ angular.module('move_car', ['ionic', 'move_car.controllers', 'move_car.services'
   $ionicConfigProvider.views.transition('android');
 
   //scrolling
-  $ionicConfigProvider.scrolling.jsScrolling(true);
+  //$ionicConfigProvider.scrolling.jsScrolling(true);
   
   //自定义url参数类型
   $urlMatcherFactoryProvider.type('json', {

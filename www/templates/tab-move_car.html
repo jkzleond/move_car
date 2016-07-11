@@ -21,7 +21,7 @@
           <input type="tel" name="phone" placeholder="您的手机号" ng-model="form_data.phone">
         </label>
       </div>
-      <button class="button button-block button-positive" ng-click="submit(move_car_form)" ng-disabled="move_car_form.$invalidate">通知TA</button>
+      <button class="button button-block button-positive" ng-click="submit(move_car_form)" ng-disabled="move_car_form.$invalidate" mc-oplog="{action_name: 'submit_order', action_title: '提交订单'}" >通知TA</button>
     </form>
   </ion-content>
 </ion-view>
