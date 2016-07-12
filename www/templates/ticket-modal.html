@@ -19,5 +19,11 @@
                 </div>
             </div>
         </div>
+        <div class="row" ng-if="!tickets || tickets.length == 0" style="height: 90%">
+          <div class="col col-33 col-offset-33 col-center" style="text-align: center; color: #ccc; font-size: 1rem">
+            <i class="ion-sad-outline" style="font-size: 7rem;"></i><br>
+            暂无可用卡券
+          </div>
+        </div>
     </ion-content>
 </ion-modal-view>
