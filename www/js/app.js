@@ -109,7 +109,7 @@ angular.module('move_car', ['ionic', 'move_car.directives', 'move_car.controller
   });
 })
 
-.config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+.config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, browserProvider) {
 
   //uniform taps style and position
   $ionicConfigProvider.tabs.style('standard');
@@ -119,7 +119,15 @@ angular.module('move_car', ['ionic', 'move_car.directives', 'move_car.controller
   $ionicConfigProvider.views.transition('android');
 
   //scrolling
-  $ionicConfigProvider.scrolling.jsScrolling(false);
+  browser = browserProvider.$get();
+  if(browser.is_wx())
+  {
+    $ionicConfigProvider.scrolling.jsScrolling(true);
+  }
+  else
+  {
+    $ionicConfigProvider.scrolling.jsScrolling(false);
+  }
   
   //自定义url参数类型
   $urlMatcherFactoryProvider.type('json', {
