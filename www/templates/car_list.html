@@ -12,7 +12,7 @@
                 </ion-option-button>
             </ion-item>
         </ion-list>
-        <div class="row" ng-if="!car_list || car_list.length == 0" style="height: 90%">
+        <div class="row" ng-if="car_list && car_list.length == 0" style="height: 90%">
           <div class="col col-33 col-offset-33 col-center" style="text-align: center; color: #ccc; font-size: 1rem">
             <i class="ion-sad-outline" style="font-size: 7rem;"></i><br>
             未添加任何车辆
