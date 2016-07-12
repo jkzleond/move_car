@@ -95,7 +95,7 @@ angular.module('move_car.controllers', [])
         $scope.ticket_selector_modal.show();
       });
     }
-    $scope.tickets = [];
+    $scope.tickets = null;
     $ionicLoading.show();
     Ticket.get_tickets($scope.user.info.user_id).success(function(resp){
       $ionicLoading.hide();
@@ -222,7 +222,7 @@ angular.module('move_car.controllers', [])
   //});
   //
   
-  $scope.orders = [];
+  $scope.orders = null;
 
   /**
    * 加载更多订单
@@ -239,6 +239,7 @@ angular.module('move_car.controllers', [])
           {
             $scope.no_more_orders = true; //防止无限scroll,无限加载必须
           }
+          $scope.orders = $scope.orders || [];
           $scope.orders = $scope.orders.concat(resp.list);
         }
       }).finally(function(){
@@ -256,6 +257,7 @@ angular.module('move_car.controllers', [])
       .success(function(resp){
         if(resp.success)
         {
+          $scope.orders = $scope.orders || [];
           $scope.orders = resp.list.reverse().concat($scope.orders);
         }
       })
@@ -287,7 +289,7 @@ angular.module('move_car.controllers', [])
       });
   }
 
-  $scope.tracks = [];
+  $scope.tracks = null;
 
   MoveCar.get_order_track_list(order_id)
     .success(function(resp){
@@ -855,7 +857,7 @@ angular.module('move_car.controllers', [])
 })
 
 .controller('TicketAvailableCtrl', function($scope, $state, $stateParams, Ticket){
-  $scope.tickets = [];
+  $scope.tickets = null;
 
   /**
    * 刷新可用票券
@@ -867,6 +869,7 @@ angular.module('move_car.controllers', [])
       .success(function(resp){
         if(resp.success)
         {
+          $scope.tickets = $scope.tickets || [];
           if(resp.list.length > 0)
           {
             $scope.tickets = $scope.tickets.concat(resp.list);
@@ -893,6 +896,7 @@ angular.module('move_car.controllers', [])
       .success(function(resp){
         if(resp.success)
         {
+          $scope.tickets = $scope.tickets || [];
           if(resp.list.length > 0)
           {
             $scope.tickets = $scope.tickets.concat(resp.list);
@@ -912,7 +916,7 @@ angular.module('move_car.controllers', [])
 })
 
 .controller('TicketExpiredCtrl', function($scope, $state, $stateParams, Ticket){
-  $scope.tickets = [];
+  $scope.tickets = null;
 
   /**
    * 获取更多过期票券
@@ -924,6 +928,7 @@ angular.module('move_car.controllers', [])
       .success(function(resp){
         if(resp.success)
         {
+          $scope.tickets = $scope.tickets || [];
           if(resp.list.length > 0)
           {
             $scope.tickets = $scope.tickets.concat(resp.list);
