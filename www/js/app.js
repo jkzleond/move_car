@@ -110,7 +110,7 @@ angular.module('move_car', ['ionic', 'move_car.directives', 'move_car.controller
 
   //微信分享完成事件
   $rootScope.wx_onshare = function(){
-    alert('share_success');
+    MoveCar.save_oplog('wx_share', '微信分享');
   };
 })
 

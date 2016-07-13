@@ -104,7 +104,7 @@ angular.module('move_car.directives', [])
                         scope.onshare();
                       },
                       cancel: function (res) {
-                       alert("如此嗨的福利，真的不分享给朋友吗？");
+                       //alert("如此嗨的福利，真的不分享给朋友吗？");
                       },
                       fail: function (res) {
                          alert(JSON.stringify(res));
@@ -123,7 +123,7 @@ angular.module('move_car.directives', [])
                         scope.onshare();
                       },
                       cancel: function (res) { 
-                        alert("如此嗨的福利，真的不分享给朋友吗？");
+                        //alert("如此嗨的福利，真的不分享给朋友吗？");
                       },
                       fail: function (res) {
                         alert(JSON.stringify(res));
