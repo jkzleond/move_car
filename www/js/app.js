@@ -107,6 +107,11 @@ angular.module('move_car', ['ionic', 'move_car.directives', 'move_car.controller
   $rootScope.$on('$mc_oplog', function(evt, op_data){
     MoveCar.save_oplog(op_data.action_name, op_data.action_title);
   });
+
+  //微信分享完成事件
+  $rootScope.wx_onshare = function(){
+    alert('share_success');
+  };
 })
 
 .config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, browserProvider) {
