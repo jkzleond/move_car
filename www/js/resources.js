@@ -4,8 +4,8 @@
 angular.module('move_car.resources', ['ngResource'])
 
 .constant('resourceConfig', {
-    //base_url: 'http://localhost:8091/mc_api/',
-    base_url: 'http://116.55.248.76:8090/mc_api/',
+    base_url: 'http://localhost:8091/mc_api/',
+    //base_url: 'http://116.55.248.76:8090/mc_api/',
     msg_duration: 5000
 })
 
@@ -30,6 +30,22 @@ angular.module('move_car.resources', ['ngResource'])
                 //截获token错误
                 $rootScope.$emit('user:info_refresh');
                 $injector.get('$state').go('tab.move_car');
+              }
+              return response;
+            }
+        }
+    });
+
+    //响应后端触发的事件,例如获取到红包
+    $httpProvider.interceptors.push(function($q, $rootScope){
+        return {
+            response: function(response){
+              var res = response.data;
+              if(res.events)
+              {
+                  angular.forEach(res.events, function(event){
+                    $rootScope.$emit('backend_event.' + event.type, event.data);
+                  });
               }
               return response;
             }

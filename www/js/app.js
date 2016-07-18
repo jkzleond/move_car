@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('move_car', ['ionic', 'move_car.directives', 'move_car.controllers', 'move_car.services', 'move_car.filters', 'move_car.resources'])
 
-.run(function($rootScope, $ionicPlatform, $location, $state, $timeout, browser, User, MoveCar) {
+.run(function($rootScope, $ionicPlatform, $location, $state, $timeout, $ionicPopup, browser, User, MoveCar) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -112,6 +112,23 @@ angular.module('move_car', ['ionic', 'move_car.directives', 'move_car.controller
   $rootScope.wx_onshare = function(){
     MoveCar.save_oplog('wx_share', '微信分享');
   };
+
+  //相应后端触发的前端事件
+  $rootScope.$on('backend_event.ticket_get', function(evt, data){
+    $rootScope.tickets = data.tickets;
+    $ionicPopup.show({
+      title: '获得福利',
+      cssClass: 'ticket-get-popup',
+      templateUrl: 'templates/ticket-get-popup.html',
+      scope: $rootScope,
+      buttons: [
+        {
+          text: '知道了',
+          type: 'button-positive'
+        }
+      ]
+    });
+  });
 })
 
 .config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, browserProvider) {

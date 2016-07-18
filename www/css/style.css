@@ -61,6 +61,10 @@
     }
 }
 
+.ticket-get-popup .popup {
+    width: 100%;
+}
+
 .item.milestone {
     border: none;
     padding-left: 32px;
