@@ -358,17 +358,18 @@ angular.module('move_car.controllers', [])
   var order_id = $stateParams.order_id;
   var car_owner_id = $stateParams.car_owner_id;
   var car_owner_source = $stateParams.car_owner_source;
+  var interval_canceled = false;
 
   MoveCar.notify(order_id, car_owner_id, car_owner_source).success(function(resp){
     if(resp.success)
     {
       $scope.data = resp.data;
-
       //倒计时
       $scope.count_down = 60; 
       $interval(function(){
         $scope.count_down--;
       }, 1000, 60).then(function(res){
+        if(interval_canceled) return; //$interval.cancel无效，用此法
         $scope.call_result_popup = $ionicPopup.show({
           title: '是否联系到车主?',
           scope: $scope,
@@ -409,6 +410,11 @@ angular.module('move_car.controllers', [])
       }, {location: 'replace'});
     }
   }
+
+  //作用域销毁时取消倒计时以及关联的事件
+  $scope.$on('$destroy', function(){
+    interval_canceled = true;
+  });
 })
 
 .controller('CallFailedCtrl', function($scope, $state, $stateParams, MoveCar){
@@ -669,7 +675,7 @@ angular.module('move_car.controllers', [])
 .controller('CarListCtrl', function($scope, $state, $ionicPopup, User){
 
   //车辆列表
-  $scope.car_list = [];
+  $scope.car_list = null;
 
   // User.get_car_list($scope.user.info.user_id)
   //   .success(function(resp){
@@ -809,6 +815,7 @@ angular.module('move_car.controllers', [])
     .success(function(resp){
       if(resp.success)
       {
+        $scope.car_list = $scope.car_list || [];
         if(resp.list.length > 0)
         {
           $scope.car_list = $scope.car_list.concat(resp.list);
@@ -834,6 +841,7 @@ angular.module('move_car.controllers', [])
     .success(function(resp){
       if(resp.success)
       {
+        $scope.car_list = $scope.car_list || [];
         if(resp.list.length > 0)
         {
           $scope.car_list = resp.list.reverse().concat($scope.car_list);//最新数据需要反向排列
